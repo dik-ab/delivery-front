@@ -1,0 +1,167 @@
+.admin-trips-page {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 56px);
+  padding: 20px;
+}
+
+.admin-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.admin-container h1 {
+  margin: 0 0 24px 0;
+  font-size: 28px;
+  color: #1f2937;
+}
+
+.filter-section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section select {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.filter-section select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.filter-count {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.trips-table-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.trips-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.trips-table thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.trips-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.trips-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.trips-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.trip-route {
+  font-weight: 500;
+}
+
+.driver-name {
+  font-weight: 500;
+}
+
+.driver-company {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.error-message {
+  background-color: #fee;
+  border: 1px solid #fc8181;
+  border-radius: 4px;
+  color: #c53030;
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.empty-state {
+  background-color: white;
+  border-radius: 8px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .admin-trips-page {
+    padding: 12px;
+  }
+
+  .admin-container h1 {
+    font-size: 24px;
+  }
+
+  .filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-section select {
+    width: 100%;
+  }
+
+  .trips-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trips-table th,
+  .trips-table td {
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .trips-table th {
+    white-space: normal;
+  }
+}
