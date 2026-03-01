@@ -1,0 +1,235 @@
+.delivery-list-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a2e;
+  color: white;
+  border-right: 1px solid #2d3748;
+}
+
+.list-header {
+  padding: 1rem;
+  border-bottom: 1px solid #2d3748;
+  flex-shrink: 0;
+}
+
+.btn-add-new {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add-new:hover {
+  background-color: #16a34a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.list-filters {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #2d3748;
+  flex-shrink: 0;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background-color: #2d3748;
+  color: white;
+  border: 1px solid #4a5568;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-select:hover {
+  border-color: #3b82f6;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-select option {
+  background-color: #1a1a2e;
+  color: white;
+}
+
+.deliveries-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.deliveries-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.deliveries-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.deliveries-scroll::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 3px;
+}
+
+.deliveries-scroll::-webkit-scrollbar-thumb:hover {
+  background: #5a6578;
+}
+
+.deliveries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.delivery-card {
+  background-color: #2d3748;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.delivery-card:hover {
+  background-color: #3d4758;
+  border-color: #3b82f6;
+  transform: translateX(4px);
+}
+
+.delivery-card.active {
+  background-color: #3d4758;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.card-name {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  flex: 1;
+  word-break: break-word;
+}
+
+.card-address {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.card-note {
+  font-size: 0.75rem;
+  color: #8892b0;
+  background-color: #1a1a2e;
+  padding: 0.5rem 0.75rem;
+  border-radius: 3px;
+  border-left: 2px solid #3b82f6;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #4a5568;
+}
+
+.card-btn-edit,
+.card-btn-delete {
+  flex: 1;
+  padding: 0.4rem 0.75rem;
+  background-color: transparent;
+  border: 1px solid #4a5568;
+  color: #a0aec0;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card-btn-edit:hover {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.card-btn-delete:hover {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.list-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.list-empty p {
+  color: #8892b0;
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+.btn-empty-add {
+  padding: 0.75rem 1.5rem;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-empty-add:hover {
+  background-color: #16a34a;
+}
+
+@media (max-width: 768px) {
+  .deliveries-list {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .delivery-card {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .card-name {
+    font-size: 0.85rem;
+  }
+
+  .card-address {
+    font-size: 0.75rem;
+  }
+}
