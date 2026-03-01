@@ -1,0 +1,106 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.app-header {
+  flex-shrink: 0;
+}
+
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background-color: #1a1a2e;
+  border-right: 1px solid #2d3748;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-map {
+  flex: 1;
+  background-color: #e5e7eb;
+  position: relative;
+}
+
+.app-error {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #fee;
+  border: 1px solid #fc8181;
+  border-radius: 4px;
+  padding: 1rem;
+  color: #c53030;
+  font-size: 0.9rem;
+  z-index: 999;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideInDown 0.3s ease;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.app-error button {
+  background: none;
+  border: none;
+  color: #c53030;
+  cursor: pointer;
+  padding: 0;
+  float: right;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    flex-direction: column;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    height: 40%;
+    max-height: 50vh;
+    border-right: none;
+    border-top: 1px solid #2d3748;
+  }
+
+  .app-map {
+    height: 60%;
+    flex: 1;
+  }
+
+  .app-error {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-sidebar {
+    height: 50%;
+  }
+
+  .app-map {
+    height: 50%;
+  }
+}
