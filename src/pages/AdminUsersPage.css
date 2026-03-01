@@ -1,0 +1,133 @@
+.admin-users-page {
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 56px);
+  padding: 20px;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-container h1 {
+  margin: 0 0 24px 0;
+  font-size: 28px;
+  color: #1f2937;
+}
+
+.users-table-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.users-table thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.users-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+}
+
+.users-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+.user-email {
+  color: #6b7280;
+  word-break: break-all;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.role-driver {
+  background-color: #3b82f6;
+}
+
+.role-shipper {
+  background-color: #10b981;
+}
+
+.role-admin {
+  background-color: #ef4444;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.error-message {
+  background-color: #fee;
+  border: 1px solid #fc8181;
+  border-radius: 4px;
+  color: #c53030;
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.empty-state {
+  background-color: white;
+  border-radius: 8px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .admin-users-page {
+    padding: 12px;
+  }
+
+  .admin-container h1 {
+    font-size: 24px;
+  }
+
+  .users-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .role-badge {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+}
