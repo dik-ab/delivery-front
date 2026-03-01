@@ -1,0 +1,21 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    height: 100%;
+  }
+
+  .layout-content {
+    min-height: calc(100vh - 56px);
+  }
+}
