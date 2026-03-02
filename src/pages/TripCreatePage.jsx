@@ -98,15 +98,15 @@ function TripCreatePage() {
 
     try {
       await createTrip({
-        origin: formData.origin,
+        origin_address: formData.origin,
         origin_lat: parseFloat(formData.origin_lat),
         origin_lng: parseFloat(formData.origin_lng),
-        destination: formData.destination,
-        dest_lat: parseFloat(formData.dest_lat),
-        dest_lng: parseFloat(formData.dest_lng),
+        destination_address: formData.destination,
+        destination_lat: parseFloat(formData.dest_lat),
+        destination_lng: parseFloat(formData.dest_lng),
         vehicle_type: formData.vehicle_type,
         available_weight: parseInt(formData.available_weight),
-        departure_time: new Date(formData.departure_time).toISOString(),
+        departure_at: new Date(formData.departure_time).toISOString(),
         price: parseInt(formData.price),
         delay_minutes: parseInt(formData.delay_minutes),
         note: formData.note,
