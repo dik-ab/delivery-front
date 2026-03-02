@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './TripCard.css'
 
-function TripCard({ trip, onClick = null }) {
+function TripCard({ trip, onClick = null, onMapClick = null, isSelected = false }) {
   const getStatusColor = (status) => {
     const colors = {
       open: '#3b82f6',
@@ -24,6 +24,10 @@ function TripCard({ trip, onClick = null }) {
     return labels[status] || status
   }
 
+  const originAddr = trip.origin_address || trip.origin
+  const destAddr = trip.destination_address || trip.destination
+  const departureTime = trip.departure_at || trip.departure_time
+
   const handleClick = (e) => {
     if (onClick) {
       e.preventDefault()
@@ -31,40 +35,57 @@ function TripCard({ trip, onClick = null }) {
     }
   }
 
+  const handleMapClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (onMapClick) onMapClick()
+  }
+
   return (
     <Link
       to={`/trips/${trip.id}`}
-      className="trip-card"
+      className={`trip-card ${isSelected ? 'trip-card-selected' : ''}`}
       onClick={handleClick}
     >
       <div className="trip-card-header">
         <div className="trip-info-top">
           <h3 className="trip-destination">
-            {trip.origin} → {trip.destination}
+            {originAddr} → {destAddr}
           </h3>
-          <span
-            className="trip-status"
-            style={{ backgroundColor: getStatusColor(trip.status) }}
-          >
-            {getStatusLabel(trip.status)}
-          </span>
+          <div className="trip-header-actions">
+            {onMapClick && (
+              <button
+                className="btn-map-preview"
+                onClick={handleMapClick}
+                title="ルートを地図で見る"
+              >
+                🗺️
+              </button>
+            )}
+            <span
+              className="trip-status"
+              style={{ backgroundColor: getStatusColor(trip.status) }}
+            >
+              {getStatusLabel(trip.status)}
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="trip-card-body">
         <div className="trip-row">
           <span className="trip-label">出発地:</span>
-          <span className="trip-value">{trip.origin}</span>
+          <span className="trip-value">{originAddr}</span>
         </div>
         <div className="trip-row">
           <span className="trip-label">到着地:</span>
-          <span className="trip-value">{trip.destination}</span>
+          <span className="trip-value">{destAddr}</span>
         </div>
 
         <div className="trip-grid">
           <div className="trip-item">
             <span className="trip-label">出発日時</span>
-            <span className="trip-value">{new Date(trip.departure_time).toLocaleString('ja-JP')}</span>
+            <span className="trip-value">{departureTime ? new Date(departureTime).toLocaleString('ja-JP') : '-'}</span>
           </div>
           <div className="trip-item">
             <span className="trip-label">積載量</span>
