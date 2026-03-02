@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
-import axios from 'axios'
 
 const AuthContext = createContext(null)
 
@@ -31,16 +30,18 @@ export const AuthProvider = ({ children }) => {
   const register = useCallback(async (email, password, name, role, company, phone) => {
     setError(null)
     try {
-      const response = await axios.post(`${API_BASE}/auth/register`, {
-        email,
-        password,
-        name,
-        role,
-        company,
-        phone
+      const response = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name, role, company, phone }),
       })
 
-      const { token: newToken, user: newUser } = response.data
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || 'ユーザー登録に失敗しました')
+      }
+
+      const { token: newToken, user: newUser } = await response.json()
 
       localStorage.setItem('auth_token', newToken)
       localStorage.setItem('auth_user', JSON.stringify(newUser))
@@ -50,21 +51,26 @@ export const AuthProvider = ({ children }) => {
 
       return newUser
     } catch (err) {
-      const message = err.response?.data?.message || 'ユーザー登録に失敗しました'
-      setError(message)
-      throw new Error(message)
+      setError(err.message)
+      throw err
     }
   }, [])
 
   const login = useCallback(async (email, password) => {
     setError(null)
     try {
-      const response = await axios.post(`${API_BASE}/auth/login`, {
-        email,
-        password
+      const response = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       })
 
-      const { token: newToken, user: newUser } = response.data
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || 'ログインに失敗しました')
+      }
+
+      const { token: newToken, user: newUser } = await response.json()
 
       localStorage.setItem('auth_token', newToken)
       localStorage.setItem('auth_user', JSON.stringify(newUser))
@@ -74,9 +80,8 @@ export const AuthProvider = ({ children }) => {
 
       return newUser
     } catch (err) {
-      const message = err.response?.data?.message || 'ログインに失敗しました'
-      setError(message)
-      throw new Error(message)
+      setError(err.message)
+      throw err
     }
   }, [])
 
