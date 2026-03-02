@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTrips } from '../hooks/useTrips'
 import TripCard from '../components/TripCard'
+import TripRouteMap from '../components/TripRouteMap'
 import './TripSearchPage.css'
 
 function TripSearchPage() {
@@ -99,6 +100,7 @@ function TripSearchPage() {
   }
 
   const [searching, setSearching] = useState(false)
+  const [selectedTrip, setSelectedTrip] = useState(null)
 
   return (
     <div className="trip-search-page">
@@ -191,6 +193,19 @@ function TripSearchPage() {
               検索結果 ({searchResults.length} 件)
             </h2>
 
+            {/* 選択した便のルートマップ */}
+            {selectedTrip && selectedTrip.origin_lat && selectedTrip.destination_lat && (
+              <div className="selected-trip-map">
+                <h3>ルートプレビュー: {selectedTrip.origin_address} → {selectedTrip.destination_address}</h3>
+                <TripRouteMap
+                  origin={{ lat: selectedTrip.origin_lat, lng: selectedTrip.origin_lng }}
+                  destination={{ lat: selectedTrip.destination_lat, lng: selectedTrip.destination_lng }}
+                  originLabel={selectedTrip.origin_address}
+                  destinationLabel={selectedTrip.destination_address}
+                />
+              </div>
+            )}
+
             {searchResults.length > 0 ? (
               <div className="results-list">
                 {searchResults.map((trip) => (
@@ -198,6 +213,8 @@ function TripSearchPage() {
                     key={trip.id}
                     trip={trip}
                     onClick={() => navigate(`/trips/${trip.id}`)}
+                    onMapClick={() => setSelectedTrip(trip)}
+                    isSelected={selectedTrip?.id === trip.id}
                   />
                 ))}
               </div>
