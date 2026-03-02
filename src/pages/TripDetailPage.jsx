@@ -4,6 +4,7 @@ import { useTrips } from '../hooks/useTrips'
 import { useMatches } from '../hooks/useMatches'
 import { useAuth } from '../hooks/useAuth'
 import MatchCard from '../components/MatchCard'
+import TripRouteMap from '../components/TripRouteMap'
 import './TripDetailPage.css'
 
 function TripDetailPage() {
@@ -100,7 +101,7 @@ function TripDetailPage() {
         </button>
 
         <div className="trip-detail-header">
-          <h1>{trip.origin} → {trip.destination}</h1>
+          <h1>{trip.origin_address || trip.origin} → {trip.destination_address || trip.destination}</h1>
           <span
             className="trip-detail-status"
             style={{
@@ -119,13 +120,23 @@ function TripDetailPage() {
               <div className="info-rows">
                 <div className="info-row">
                   <span className="info-label">出発地</span>
-                  <span className="info-value">{trip.origin}</span>
+                  <span className="info-value">{trip.origin_address || trip.origin}</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">到着地</span>
-                  <span className="info-value">{trip.destination}</span>
+                  <span className="info-value">{trip.destination_address || trip.destination}</span>
                 </div>
               </div>
+
+              {/* ルートマップ */}
+              {trip.origin_lat && trip.destination_lat && (
+                <TripRouteMap
+                  origin={{ lat: trip.origin_lat, lng: trip.origin_lng }}
+                  destination={{ lat: trip.destination_lat, lng: trip.destination_lng }}
+                  originLabel={trip.origin_address || trip.origin}
+                  destinationLabel={trip.destination_address || trip.destination}
+                />
+              )}
             </section>
 
             <section className="detail-section">
@@ -134,7 +145,7 @@ function TripDetailPage() {
                 <div className="info-row">
                   <span className="info-label">出発日時</span>
                   <span className="info-value">
-                    {new Date(trip.departure_time).toLocaleString('ja-JP')}
+                    {new Date(trip.departure_at || trip.departure_time).toLocaleString('ja-JP')}
                   </span>
                 </div>
                 <div className="info-row">
