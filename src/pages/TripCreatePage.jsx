@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTrips } from '../hooks/useTrips'
+import TripRouteMap from '../components/TripRouteMap'
 import './TripCreatePage.css'
 
 function TripCreatePage() {
@@ -170,6 +171,19 @@ function TripCreatePage() {
               </div>
             </div>
           </section>
+
+          {/* ルートプレビュー */}
+          {(formData.origin_lat || formData.dest_lat) && (
+            <section className="form-section">
+              <h2>ルートプレビュー</h2>
+              <TripRouteMap
+                origin={formData.origin_lat ? { lat: parseFloat(formData.origin_lat), lng: parseFloat(formData.origin_lng) } : null}
+                destination={formData.dest_lat ? { lat: parseFloat(formData.dest_lat), lng: parseFloat(formData.dest_lng) } : null}
+                originLabel={formData.origin}
+                destinationLabel={formData.destination}
+              />
+            </section>
+          )}
 
           <section className="form-section">
             <h2>車両・積載情報</h2>
