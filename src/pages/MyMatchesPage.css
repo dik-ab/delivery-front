@@ -51,6 +51,29 @@
   background-color: #f0f4ff;
 }
 
+.match-wrapper {
+  position: relative;
+}
+
+.btn-payment {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: -4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 0 0 8px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-payment:hover {
+  opacity: 0.9;
+}
+
 @media (max-width: 768px) {
   .my-matches-page {
     padding: 12px;

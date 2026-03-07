@@ -9,9 +9,11 @@ function MyMatchesPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
+  const isTransportCompany = user?.role === 'transport_company' || user?.role === 'driver'
+
   const myMatches = matches.filter(
     (m) =>
-      (user?.role === 'driver' && m.driver_id === user?.id) ||
+      (isTransportCompany && m.driver_id === user?.id) ||
       (user?.role === 'shipper' && m.shipper_id === user?.id)
   )
 
@@ -46,7 +48,7 @@ function MyMatchesPage() {
     <div className="my-matches-page">
       <div className="my-matches-container">
         <h1>
-          {user?.role === 'driver'
+          {isTransportCompany
             ? 'マッチングリクエスト'
             : 'マイリクエスト'}
         </h1>
@@ -54,23 +56,32 @@ function MyMatchesPage() {
         {myMatches.length > 0 ? (
           <div className="matches-list">
             {myMatches.map((match) => (
-              <MatchCard
-                key={match.id}
-                match={match}
-                onApprove={() => handleApprove(match.id)}
-                onReject={() => handleReject(match.id)}
-                onComplete={() => handleComplete(match.id)}
-                showActions={
-                  user?.role === 'driver' &&
-                  (match.status === 'pending' || match.status === 'approved')
-                }
-              />
+              <div key={match.id} className="match-wrapper">
+                <MatchCard
+                  match={match}
+                  onApprove={() => handleApprove(match.id)}
+                  onReject={() => handleReject(match.id)}
+                  onComplete={() => handleComplete(match.id)}
+                  showActions={
+                    isTransportCompany &&
+                    (match.status === 'pending' || match.status === 'approved')
+                  }
+                />
+                {match.status === 'approved' && (
+                  <button
+                    className="btn-payment"
+                    onClick={() => navigate(`/payment/${match.id}`)}
+                  >
+                    決済へ進む
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         ) : (
           <div className="empty-state">
             <p>
-              {user?.role === 'driver'
+              {isTransportCompany
                 ? 'マッチングリクエストがありません'
                 : 'マッチングリクエストを送信していません'}
             </p>
