@@ -17,6 +17,7 @@ import TripDetailPage from './pages/TripDetailPage'
 import MyTripsPage from './pages/MyTripsPage'
 import MyMatchesPage from './pages/MyMatchesPage'
 import TrackingPage from './pages/TrackingPage'
+import PaymentPage from './pages/PaymentPage'
 
 // Admin Pages
 import AdminDashboardPage from './pages/AdminDashboardPage'
@@ -61,7 +62,7 @@ function App() {
             <Route
               path="/trips/new"
               element={
-                <ProtectedRoute requiredRole="driver">
+                <ProtectedRoute requiredRole="transport_company">
                   <TripCreatePage />
                 </ProtectedRoute>
               }
@@ -77,7 +78,7 @@ function App() {
             <Route
               path="/my-trips"
               element={
-                <ProtectedRoute requiredRole="driver">
+                <ProtectedRoute requiredRole="transport_company">
                   <MyTripsPage />
                 </ProtectedRoute>
               }
@@ -95,6 +96,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <TrackingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payment/:matchId"
+              element={
+                <ProtectedRoute>
+                  <PaymentPage />
                 </ProtectedRoute>
               }
             />
