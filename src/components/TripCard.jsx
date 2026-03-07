@@ -53,6 +53,12 @@ function TripCard({ trip, onClick = null, onMapClick = null, isSelected = false 
             {originAddr} → {destAddr}
           </h3>
           <div className="trip-header-actions">
+            {trip.trip_type === 'return' && (
+              <span className="trip-badge trip-badge-return">帰り便</span>
+            )}
+            {trip.is_solo_mode && (
+              <span className="trip-badge trip-badge-solo">ソロ</span>
+            )}
             {onMapClick && (
               <button
                 className="btn-map-preview"
