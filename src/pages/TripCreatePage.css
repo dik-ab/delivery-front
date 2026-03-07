@@ -173,6 +173,17 @@
   transform: translateX(20px);
 }
 
+/* 無効化時のスタイル */
+.toggle-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.toggle-disabled .toggle-description {
+  color: #ef4444;
+  font-style: italic;
+}
+
 .toggle-text {
   display: flex;
   flex-direction: column;

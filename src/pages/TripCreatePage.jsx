@@ -33,10 +33,24 @@ function TripCreatePage() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
+    setFormData((prev) => {
+      const updated = {
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }
+
+      // ソロモードON → 外部公開を自動OFF（マッチングしないので公開不要）
+      if (name === 'is_solo_mode' && checked) {
+        updated.is_public = false
+      }
+
+      // 外部公開ON → ソロモードを自動OFF（公開=マッチング対象なのでソロと矛盾）
+      if (name === 'is_public' && checked) {
+        updated.is_solo_mode = false
+      }
+
+      return updated
+    })
   }
 
   const geocodeAddress = async (address, isDestination = false) => {
@@ -230,37 +244,43 @@ function TripCreatePage() {
               </div>
             )}
 
-            <div className="toggle-group">
+            <div className={`toggle-group${formData.is_solo_mode ? ' toggle-disabled' : ''}`}>
               <label className="toggle-label">
                 <input
                   type="checkbox"
                   name="is_public"
                   checked={formData.is_public}
                   onChange={handleChange}
+                  disabled={formData.is_solo_mode}
                 />
                 <span className="toggle-switch"></span>
                 <span className="toggle-text">
                   外部公開する
                   <span className="toggle-description">
-                    ONにすると、他の荷主・運送会社から検索可能になります
+                    {formData.is_solo_mode
+                      ? 'ソロモード中は外部公開できません'
+                      : 'ONにすると、他の荷主・運送会社から検索可能になります'}
                   </span>
                 </span>
               </label>
             </div>
 
-            <div className="toggle-group">
+            <div className={`toggle-group${formData.is_public ? ' toggle-disabled' : ''}`}>
               <label className="toggle-label">
                 <input
                   type="checkbox"
                   name="is_solo_mode"
                   checked={formData.is_solo_mode}
                   onChange={handleChange}
+                  disabled={formData.is_public}
                 />
                 <span className="toggle-switch"></span>
                 <span className="toggle-text">
                   ソロモード（自社管理用）
                   <span className="toggle-description">
-                    自社の便情報を管理するだけで、マッチングは行いません
+                    {formData.is_public
+                      ? '外部公開中はソロモードにできません'
+                      : '自社の便情報を管理するだけで、マッチングは行いません'}
                   </span>
                 </span>
               </label>
