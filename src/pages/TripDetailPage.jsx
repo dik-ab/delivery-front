@@ -172,6 +172,24 @@ function TripDetailPage() {
                   <span className="info-label">利用可能重量</span>
                   <span className="info-value">{trip.available_weight}kg</span>
                 </div>
+                <div className="info-row">
+                  <span className="info-label">便種別</span>
+                  <span className="info-value">
+                    {trip.trip_type === 'return' ? '帰り便（空車）' : '往路（配送便）'}
+                  </span>
+                </div>
+                {trip.is_solo_mode && (
+                  <div className="info-row">
+                    <span className="info-label">モード</span>
+                    <span className="info-value">ソロモード（自社管理用）</span>
+                  </div>
+                )}
+                <div className="info-row">
+                  <span className="info-label">公開状態</span>
+                  <span className="info-value">
+                    {trip.is_public ? '公開中' : '非公開'}
+                  </span>
+                </div>
               </div>
             </section>
 
