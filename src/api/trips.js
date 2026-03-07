@@ -17,10 +17,13 @@ export const tripsApi = {
   deleteTrip: (id) => client.delete(`/trips/${id}`),
 
   // Search trips
-  searchTrips: (params) => {
-    const queryString = new URLSearchParams(params).toString()
-    return client.get(`/trips/search?${queryString}`)
-  }
+  searchTrips: (params) => client.post('/trips/search', params),
+
+  // Get predicted location for a trip
+  getPredictedLocation: (tripId, targetTime) => {
+    const query = targetTime ? `?at=${encodeURIComponent(targetTime)}` : ''
+    return client.get(`/trips/${tripId}/predict${query}`)
+  },
 }
 
 export default tripsApi
