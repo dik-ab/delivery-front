@@ -13,10 +13,12 @@ function DashboardPage() {
   const { matches } = useMatches()
   const navigate = useNavigate()
 
+  const isTransportCompany = user?.role === 'transport_company' || user?.role === 'driver'
+
   const myTrips = trips.filter((t) => t.driver_id === user?.id)
   const myMatches = matches.filter(
     (m) =>
-      (user?.role === 'driver' && m.driver_id === user?.id) ||
+      (isTransportCompany && m.driver_id === user?.id) ||
       (user?.role === 'shipper' && m.shipper_id === user?.id)
   )
 
@@ -31,13 +33,13 @@ function DashboardPage() {
         <div className="dashboard-header">
           <h1>ダッシュボード</h1>
           <p className="dashboard-greeting">
-            {user?.role === 'driver' ? 'ドライバー' : '荷主'}様、お疲れ様です！
+            {isTransportCompany ? '運送会社' : '荷主'}様、お疲れ様です！
           </p>
         </div>
 
         {/* Stats Section */}
         <div className="stats-grid">
-          {user?.role === 'driver' ? (
+          {isTransportCompany ? (
             <>
               <StatsCard
                 icon="📋"
@@ -96,7 +98,7 @@ function DashboardPage() {
 
         {/* Main Content */}
         <div className="dashboard-main">
-          {user?.role === 'driver' ? (
+          {isTransportCompany ? (
             <>
               {/* Active Trips */}
               <section className="dashboard-section">
