@@ -1,0 +1,100 @@
+.predicted-location-map {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.predicted-map-loading {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #64748b;
+}
+
+.predict-info-window {
+  padding: 4px;
+  font-size: 13px;
+}
+
+.predict-info-window strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #2563eb;
+}
+
+.predict-info-window p {
+  margin: 2px 0;
+  color: #475569;
+}
+
+.prediction-info-bar {
+  background: #fff;
+  padding: 16px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.prediction-info-bar.no-data {
+  text-align: center;
+  color: #94a3b8;
+}
+
+.prediction-info-bar.no-data p {
+  margin: 0;
+}
+
+.prediction-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #2563eb, #ef4444);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  font-weight: 700;
+  font-size: 14px;
+  color: #2563eb;
+  min-width: 48px;
+  text-align: right;
+}
+
+.prediction-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.refresh-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.refresh-btn:hover {
+  background: #1d4ed8;
+}
