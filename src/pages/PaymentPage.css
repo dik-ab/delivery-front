@@ -254,6 +254,92 @@
   background-color: #059669;
 }
 
+/* Stripe Card Element */
+.payment-amount-display {
+  font-size: 16px;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+.payment-amount-display strong {
+  font-size: 24px;
+  color: #667eea;
+}
+
+.stripe-card-wrapper {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 14px 12px;
+  background-color: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.stripe-card-wrapper:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.stripe-card-element {
+  min-height: 20px;
+}
+
+.card-form-note {
+  margin: 10px 0 16px 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.card-form-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-cancel-card {
+  flex: 0 0 auto;
+  padding: 12px 20px;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-cancel-card:hover {
+  background-color: #e5e7eb;
+}
+
+.btn-pay {
+  flex: 1;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-pay:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-pay:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.env-note {
+  font-size: 11px !important;
+  color: #9ca3af !important;
+  font-family: monospace;
+}
+
 .payment-info-box {
   background-color: #eff6ff;
   border: 1px solid #bfdbfe;
