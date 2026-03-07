@@ -82,7 +82,7 @@ function TripSearchPage() {
         origin_lng: originCoords.lng,
         dest_lat: destCoords.lat,
         dest_lng: destCoords.lng,
-        radius: searchParams.radius
+        radius_km: parseFloat(searchParams.radius),
       }
 
       if (searchParams.date) {
@@ -94,7 +94,17 @@ function TripSearchPage() {
       }
 
       // Perform search
-      const results = await searchTrips(params)
+      const response = await searchTrips(params)
+
+      // バックエンドは { normal_matches, return_matches } で返すので配列に結合
+      let results = []
+      if (Array.isArray(response)) {
+        results = response
+      } else if (response && typeof response === 'object') {
+        const normal = response.normal_matches || []
+        const returnTrips = response.return_matches || []
+        results = [...normal, ...returnTrips]
+      }
       setSearchResults(results)
       setSearched(true)
     } catch (err) {
