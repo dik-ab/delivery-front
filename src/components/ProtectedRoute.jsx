@@ -17,8 +17,15 @@ function ProtectedRoute({ children, requiredRole = null }) {
     return <Navigate to="/login" replace />
   }
 
-  if (requiredRole && user?.role !== requiredRole) {
-    return <Navigate to="/dashboard" replace />
+  if (requiredRole) {
+    // transport_company ロールは旧 driver ロールも許可（後方互換性）
+    const hasRole =
+      requiredRole === 'transport_company'
+        ? user?.role === 'transport_company' || user?.role === 'driver'
+        : user?.role === requiredRole
+    if (!hasRole) {
+      return <Navigate to="/dashboard" replace />
+    }
   }
 
   return children
