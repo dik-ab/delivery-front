@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useTrips } from '../hooks/useTrips'
+import tripsApi from '../api/trips'
 import { useMatches } from '../hooks/useMatches'
 import { useAuth } from '../hooks/useAuth'
 import MatchCard from '../components/MatchCard'
@@ -10,26 +10,62 @@ import './TripDetailPage.css'
 function TripDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { trips } = useTrips()
   const { createMatch, approveMatch, rejectMatch } = useMatches()
   const { user } = useAuth()
 
-  const trip = trips.find((t) => t.id === id)
+  const [trip, setTrip] = useState(null)
+  const [tripLoading, setTripLoading] = useState(true)
+  const [tripError, setTripError] = useState(null)
+
   const [showMatchForm, setShowMatchForm] = useState(false)
   const [matchFormData, setMatchFormData] = useState({
     cargo_weight: '',
     cargo_description: '',
-    message: ''
+    message: '',
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  if (!trip) {
+  // 個別APIで便情報を取得
+  useEffect(() => {
+    const fetchTrip = async () => {
+      setTripLoading(true)
+      setTripError(null)
+      try {
+        const response = await tripsApi.getTrip(id)
+        setTrip(response.data || response)
+      } catch (err) {
+        console.error('Error fetching trip:', err)
+        setTripError(err.message || '便の取得に失敗しました')
+      } finally {
+        setTripLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchTrip()
+    }
+  }, [id])
+
+  if (tripLoading) {
     return (
       <div className="trip-detail-page">
         <div className="trip-detail-container">
-          <p className="not-found">便が見つかりません</p>
-          <button className="btn-secondary" onClick={() => navigate('/dashboard')}>
+          <p className="loading-text">読み込み中...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (tripError || !trip) {
+    return (
+      <div className="trip-detail-page">
+        <div className="trip-detail-container">
+          <p className="not-found">{tripError || '便が見つかりません'}</p>
+          <button
+            className="btn-secondary"
+            onClick={() => navigate('/dashboard')}
+          >
             ダッシュボードに戻る
           </button>
         </div>
@@ -58,14 +94,14 @@ function TripDetailPage() {
         cargo_weight: parseInt(matchFormData.cargo_weight),
         cargo_description: matchFormData.cargo_description,
         message: matchFormData.message,
-        matched_price: trip.price
+        matched_price: trip.price,
       })
 
       setShowMatchForm(false)
       setMatchFormData({
         cargo_weight: '',
         cargo_description: '',
-        message: ''
+        message: '',
       })
       alert('マッチングリクエストを送信しました')
     } catch (err) {
@@ -101,11 +137,14 @@ function TripDetailPage() {
         </button>
 
         <div className="trip-detail-header">
-          <h1>{trip.origin_address || trip.origin} → {trip.destination_address || trip.destination}</h1>
+          <h1>
+            {trip.origin_address || trip.origin} →{' '}
+            {trip.destination_address || trip.destination}
+          </h1>
           <span
             className="trip-detail-status"
             style={{
-              backgroundColor: getStatusColor(trip.status)
+              backgroundColor: getStatusColor(trip.status),
             }}
           >
             {getStatusLabel(trip.status)}
@@ -120,11 +159,15 @@ function TripDetailPage() {
               <div className="info-rows">
                 <div className="info-row">
                   <span className="info-label">出発地</span>
-                  <span className="info-value">{trip.origin_address || trip.origin}</span>
+                  <span className="info-value">
+                    {trip.origin_address || trip.origin}
+                  </span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">到着地</span>
-                  <span className="info-value">{trip.destination_address || trip.destination}</span>
+                  <span className="info-value">
+                    {trip.destination_address || trip.destination}
+                  </span>
                 </div>
               </div>
 
@@ -132,9 +175,14 @@ function TripDetailPage() {
               {trip.origin_lat && trip.destination_lat && (
                 <TripRouteMap
                   origin={{ lat: trip.origin_lat, lng: trip.origin_lng }}
-                  destination={{ lat: trip.destination_lat, lng: trip.destination_lng }}
+                  destination={{
+                    lat: trip.destination_lat,
+                    lng: trip.destination_lng,
+                  }}
                   originLabel={trip.origin_address || trip.origin}
-                  destinationLabel={trip.destination_address || trip.destination}
+                  destinationLabel={
+                    trip.destination_address || trip.destination
+                  }
                 />
               )}
             </section>
@@ -145,12 +193,16 @@ function TripDetailPage() {
                 <div className="info-row">
                   <span className="info-label">出発日時</span>
                   <span className="info-value">
-                    {new Date(trip.departure_at || trip.departure_time).toLocaleString('ja-JP')}
+                    {new Date(
+                      trip.departure_at || trip.departure_time
+                    ).toLocaleString('ja-JP')}
                   </span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">料金</span>
-                  <span className="info-value">¥{trip.price?.toLocaleString()}</span>
+                  <span className="info-value">
+                    ¥{trip.price?.toLocaleString()}
+                  </span>
                 </div>
                 {trip.delay_minutes && (
                   <div className="info-row">
@@ -175,13 +227,17 @@ function TripDetailPage() {
                 <div className="info-row">
                   <span className="info-label">便種別</span>
                   <span className="info-value">
-                    {trip.trip_type === 'return' ? '帰り便（空車）' : '往路（配送便）'}
+                    {trip.trip_type === 'return'
+                      ? '帰り便（空車）'
+                      : '往路（配送便）'}
                   </span>
                 </div>
                 {trip.is_solo_mode && (
                   <div className="info-row">
                     <span className="info-label">モード</span>
-                    <span className="info-value">ソロモード（自社管理用）</span>
+                    <span className="info-value">
+                      ソロモード（自社管理用）
+                    </span>
                   </div>
                 )}
                 <div className="info-row">
@@ -266,7 +322,9 @@ function TripDetailPage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="cargo_description">荷物の説明 (任意)</label>
+                    <label htmlFor="cargo_description">
+                      荷物の説明 (任意)
+                    </label>
                     <textarea
                       id="cargo_description"
                       name="cargo_description"
@@ -324,7 +382,7 @@ function getStatusColor(status) {
     matched: '#eab308',
     in_transit: '#10b981',
     completed: '#6b7280',
-    cancelled: '#ef4444'
+    cancelled: '#ef4444',
   }
   return colors[status] || '#6b7280'
 }
@@ -335,7 +393,7 @@ function getStatusLabel(status) {
     matched: 'マッチ済み',
     in_transit: '輸送中',
     completed: '完了',
-    cancelled: 'キャンセル'
+    cancelled: 'キャンセル',
   }
   return labels[status] || status
 }
