@@ -11,9 +11,10 @@ function MyMatchesPage() {
 
   const isTransportCompany = user?.role === 'transport_company' || user?.role === 'driver'
 
+  // Matchモデルにdriver_idはない。TripのPreloadで m.trip.driver_id が返る
   const myMatches = matches.filter(
     (m) =>
-      (isTransportCompany && m.driver_id === user?.id) ||
+      (isTransportCompany && m.trip?.driver_id === user?.id) ||
       (user?.role === 'shipper' && m.shipper_id === user?.id)
   )
 
