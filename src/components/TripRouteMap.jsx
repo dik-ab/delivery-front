@@ -14,7 +14,7 @@ const containerStyle = {
 
 const defaultCenter = { lat: 36.2048, lng: 138.2529 } // 日本中心
 
-function TripRouteMap({ origin, destination, originLabel, destinationLabel }) {
+function TripRouteMap({ origin, destination, originLabel, destinationLabel, onRouteCalculated }) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '',
@@ -51,6 +51,10 @@ function TripRouteMap({ origin, destination, originLabel, destinationLabel }) {
             distance: leg.distance.text,
             duration: leg.duration.text,
           })
+          // ルートデータを親コンポーネントに通知
+          if (onRouteCalculated) {
+            onRouteCalculated(result)
+          }
         } else {
           console.error('Directions request failed:', status)
           setDirections(null)
