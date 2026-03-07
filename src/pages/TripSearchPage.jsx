@@ -15,6 +15,7 @@ function TripSearchPage() {
     dest_lng: '',
     radius: '50',
     date: '',
+    trip_type: 'all',
     includeReverse: false
   })
   const [searchResults, setSearchResults] = useState([])
@@ -86,6 +87,10 @@ function TripSearchPage() {
 
       if (searchParams.date) {
         params.date = searchParams.date
+      }
+
+      if (searchParams.trip_type !== 'all') {
+        params.trip_type = searchParams.trip_type
       }
 
       // Perform search
@@ -165,6 +170,20 @@ function TripSearchPage() {
             </div>
           </div>
 
+          <div className="form-group">
+            <label htmlFor="trip_type">便種別</label>
+            <select
+              id="trip_type"
+              name="trip_type"
+              value={searchParams.trip_type}
+              onChange={handleChange}
+            >
+              <option value="all">すべて</option>
+              <option value="outbound">往路のみ</option>
+              <option value="return">帰り便のみ</option>
+            </select>
+          </div>
+
           <div className="form-checkbox">
             <input
               id="includeReverse"
@@ -174,7 +193,7 @@ function TripSearchPage() {
               onChange={handleChange}
             />
             <label htmlFor="includeReverse">
-              帰り便も検索する（帰り便シェアで往路を検索）
+              逆方向も検索する（出発地↔到着地を入れ替えた便も表示）
             </label>
           </div>
 
