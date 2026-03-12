@@ -18,7 +18,7 @@ function DashboardPage() {
   const myTrips = trips.filter((t) => t.driver_id === user?.id)
   const myMatches = matches.filter(
     (m) =>
-      (isTransportCompany && m.driver_id === user?.id) ||
+      (isTransportCompany && m.trip?.driver_id === user?.id) ||
       (user?.role === 'shipper' && m.shipper_id === user?.id)
   )
 
@@ -135,6 +135,12 @@ function DashboardPage() {
                 <section className="dashboard-section">
                   <div className="section-header">
                     <h2>マッチング待機中 ({pendingMatches.length})</h2>
+                    <button
+                      className="btn-secondary"
+                      onClick={() => navigate('/my-matches')}
+                    >
+                      マッチング管理へ
+                    </button>
                   </div>
                   <div className="matches-list">
                     {pendingMatches.map((match) => (
